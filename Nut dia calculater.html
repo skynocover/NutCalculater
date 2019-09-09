@@ -1,0 +1,212 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Nut dia calculater</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		    
+    <script>     
+	nutype = new Array();
+	nutype[0]=["VC","WC","VE","WE"];
+	nutype[1]=["DC","IC"]; //inter
+
+	function renew() {
+		var index = parseFloat(document.getElementById('cycletype').value);				
+		var op = document.getElementById("type");		
+		op.options.length=0;		
+		for ( i = 0; i < nutype[index].length; i++) {
+			op[i] = new Option(nutype[index][i])
+		}			
+	}
+
+    function calc(){
+        var od      = parseFloat(document.getElementById('screwod').value);
+        var lead    = parseFloat(document.getElementById('lead').value);
+        var type    = document.getElementById('type').value;
+		var bd      = parseFloat(document.getElementById('balldia').value);
+		var cycle   = document.getElementById('cycle').value;
+		var tubes 	= document.getElementById('tubes').value;
+		var nutamount = document.getElementById('nutamount').value;
+		var minod   = 0;
+		var minl    = 1;
+		
+		switch (type){
+            case 'DC':
+                minod = 65;
+				if (nutamount == 1) {
+					minl =78;
+				}else{
+					minl = 158;
+				}
+                break;
+            case 'IC':
+                minod = 61.5;
+				if (nutamount == 1) {
+					minl = 99;
+				}else{
+					minl = 189;
+				}				
+                break;
+            case 'VC':
+                minod = 65;
+				if (nutamount == 1) {
+					minl = 103;
+				}else{
+					minl = 180;
+				}
+                break;
+            case 'WC':
+                minod = 82;                
+				if (nutamount == 1) {
+					minl = 103;
+				}else{
+					minl = 180;
+				}
+                break;         
+			case 'VE' :
+				minod = 64;
+				if (nutamount == 1) {
+					minl = 96;
+				}else{
+					minl = 175;
+				}
+				break;  
+			case 'WE' :
+				minod = 86;
+				if (nutamount == 1) {
+					minl = 96;
+				}else{
+					minl = 175;
+				}
+				break;
+        }
+
+		document.getElementById("minod").value = (minod+od-40-(6.35-bd)*2).toFixed(1);
+		document.getElementById("minl").value  = (minl+((lead-10)*tubes*cycle+lead*(tubes-5))*nutamount).toFixed(0);
+
+    }
+	</script>
+		
+	</head>
+	<body onLoad="calc()">
+		<!-- Wrapper -->
+			<div id="wrapper" class="divided">
+
+					<section class="wrapper style1 align-center">
+						<div class="inner medium">
+							<h2>Nut dia calculater</h2>
+							<form method="post">
+								<div class="field half">
+									<label for="name">外徑</label>
+									<select id="screwod" onChange="calc()" >
+											<option value="16">16</option>
+											<option value="20">20</option>
+											<option value="25">25</option>
+											<option value="28">28</option>
+											<option value="32">32</option>
+											<option value="36">36</option>
+											<option value="40" selected="true">40</option>
+											<option value="45">45</option>
+											<option value="50">50</option>
+											<option value="55">55</option>
+											<option value="63">63</option>
+											<option value="80">80</option>
+										</select> 
+								</div>
+								<div class="field half">
+									<label for="name">導程</label>
+									<select id="lead" onChange="calc()" >
+											<option value="5">5</option>
+											<option value="6">6</option>
+											<option value="8">8</option>
+											<option value="10" selected="true">10</option>
+											<option value="12">12</option>
+											<option value="16">16</option>
+										</select> 
+								</div>
+								<div class="field half">
+									<label for="name">珠徑</label>
+									<select id="balldia" onChange="calc()" >
+                                        <option value="2.391">2.381</option>
+                                        <option value="3.175">3.175</option>
+                                        <option value="3.969">3.969</option>
+                                        <option value="4.762">4.762</option>
+                                        <option value="6.35" selected="true">6.35</option>
+                                        <option value="7.144">7.144</option>
+                                        <option value="7.938">7.938</option>
+                                        <option value="9.525">9.525</option>
+                                    </select> 
+								</div>
+								<div class="field half">
+									<label for="name">循環方式</label>
+									<select id="cycletype" onChange="renew(),calc()"   >
+                                        <option value="0">外循環</option>
+                                        <option value="1">內循環</option>
+                                    </select> 
+								</div>				
+								
+								<div class="field half">
+									<label for="name">螺帽型式</label>
+									<select id="type"   onChange="calc()" >
+										<!--
+                                        <option value="DC">DC</option>
+                                        <option value="IC">IC</option>
+                                        <option value="VC">VC</option>
+                                        <option value="WC">WC</option>
+                                        <option value="VE">VE</option>
+										<option value="WE">WE</option>-->
+										<option value="">請由左方選取系別
+                                    </select> 
+								</div>
+								<div class="field half">
+										<label for="name">螺帽數</label>
+										<select id="nutamount" onChange="calc()" >
+											<option value="1">1</option>
+											<option value="2">2</option>									
+										</select> 
+								</div>
+								<div class="field half">
+									<label for="name">珠捲數</label>
+									<select id="cycle" onChange="calc()" >
+										<option value="2">A</option>
+										<option value="3">B</option>
+										<option value="4">C</option>
+										<option value="5">E</option>
+										<option value="6">F</option>
+										<option value="1"selected="true">T</option>
+									</select> 
+								</div>
+								<div class="field half">
+									<label for="name">管數</label>
+									<select id="tubes" onChange="calc()" >
+										<option value="1">1</option>
+										<option value="2">2</option>
+										<option value="3">3</option>
+										<option value="4" selected="true">4</option>
+										<option value="5">5</option>
+										<option value="6">6</option>
+									</select> 
+								</div>
+								<div class="field half">
+									<label for="message">最小帽徑</label>
+									<output id="minod"></output>
+								</div>
+								<div class="field half">
+										<label for="message">帽長</label>
+										<output id="minl"></output>
+									</div>
+                            </form>
+						</div>
+					</section>
+			</div>
+
+		<!-- Scripts 
+			<disable_script src="assets/js/jquery.min.js"></disable_script>
+			<disable_script src="assets/js/jquery.scrollex.min.js"></disable_script>
+			<disable_script src="assets/js/jquery.scrolly.min.js"></disable_script>
+			<disable_script src="assets/js/skel.min.js"></disable_script>
+			<disable_script src="assets/js/util.js"></disable_script>
+			<disable_script src="assets/js/main.js"></disable_script>-->
+	</body>
+</html>
