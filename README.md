@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # NutCalculater
 Calculater for Nut.length and Nut.OD
 
